@@ -1,8 +1,8 @@
 {
   "name": "node.api.nest",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "A simple Node.js API, written using Typescript and Nest",
+  "author": "Nicolas Pearson",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
@@ -12,9 +12,9 @@
     "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
     "start:prod": "node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "jest --config ./test/unit/jest-unit.json",
-    "test:watch": "jest --watch --config ./test/unit/jest-unit.json",
-    "test:cov": "jest --coverage --config ./test/unit/jest-unit.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/e2e/jest-e2e.json",
     "ncu": "ncu",
@@ -23,7 +23,11 @@
   "dependencies": {
     "@nestjs/common": "6.5.3",
     "@nestjs/core": "6.5.3",
+    "@nestjs/passport": "6.1.0",
     "@nestjs/platform-express": "6.5.3",
+    "module-alias": "2.2.1",
+    "passport": "0.4.0",
+    "passport-local": "1.0.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.0",
     "rxjs": "6.5.2"
@@ -33,6 +37,7 @@
     "@types/express": "4.17.0",
     "@types/jest": "24.0.17",
     "@types/node": "12.7.2",
+    "@types/passport-local": "1.0.33",
     "@types/supertest": "2.0.8",
     "jest": "24.8.0",
     "npm-check-updates": "3.1.21",
@@ -45,18 +50,7 @@
     "tslint": "5.18.0",
     "typescript": "3.5.3"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+  "_moduleAliases": {
+    "#": "dist/"
   }
 }
