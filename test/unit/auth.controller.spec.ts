@@ -1,12 +1,30 @@
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from '../../src/auth/auth.controller';
+
+import { AuthController } from '@app/auth/auth.controller';
+import { AuthService } from '@app/auth/auth.service';
+import { jwtConstants } from '@app/auth/constants';
+import { UserModule } from '@app/user/user.module';
+import { UserService } from '@app/user/user.service';
 
 describe('Auth Controller', () => {
   let controller: AuthController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+        JwtModule.register({
+          secretOrPrivateKey: jwtConstants.secret,
+          signOptions: {
+            expiresIn: 3600,
+          },
+        }),
+        UserModule,
+      ],
       controllers: [AuthController],
+      providers: [AuthService, UserService],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

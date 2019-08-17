@@ -19,7 +19,7 @@ module.exports = {
 
   // Map aliases
   moduleNameMapper: {
-    '^#(.*)$': '<rootDir>/src/$1',
+    '^@app(.*)$': '<rootDir>/src$1',
   },
 
   // The root directories
