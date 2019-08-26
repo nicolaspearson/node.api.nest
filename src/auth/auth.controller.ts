@@ -1,9 +1,16 @@
-import { Controller, Request, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Injectable,
+  Request,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from '@app/auth/auth.service';
 
 @Controller('auth')
+@Injectable()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
