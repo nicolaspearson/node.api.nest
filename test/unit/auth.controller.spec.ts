@@ -4,9 +4,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthController } from '@app/auth/auth.controller';
 import { AuthService } from '@app/auth/auth.service';
-import { jwtConstants } from '@app/auth/constants';
 import { UserModule } from '@app/user/user.module';
 import { UserService } from '@app/user/user.service';
+import { EnvService } from '@app/env';
 
 describe('Auth Controller', () => {
   let controller: AuthController;
@@ -16,9 +16,9 @@ describe('Auth Controller', () => {
       imports: [
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
-          secretOrPrivateKey: jwtConstants.secret,
+          secretOrPrivateKey: EnvService.get().JWT_SECRET,
           signOptions: {
-            expiresIn: 3600,
+            expiresIn: EnvService.get().JWT_EXPIRATION,
           },
         }),
         UserModule,
