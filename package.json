@@ -19,7 +19,8 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "ncu": "ncu",
-    "ncu:u": "ncu -u"
+    "ncu:u": "ncu -u",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/db/config.db.ts"
   },
   "dependencies": {
     "@nestjs/common": "~6.6.7",
