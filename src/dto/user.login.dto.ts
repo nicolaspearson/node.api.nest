@@ -4,9 +4,9 @@ export default class LoginUserDto {
   @IsString()
   @IsEmail()
   @Length(1, 500)
-  public readonly emailAddress: string;
+  public emailAddress: string;
 
   @IsString()
   @Length(6, 500)
-  public readonly password: string;
+  public password: string;
 }

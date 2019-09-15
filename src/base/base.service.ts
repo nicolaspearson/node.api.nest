@@ -1,15 +1,11 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
 import { validate, ValidationError } from 'class-validator';
-import {
-  DeepPartial,
-  DeleteResult,
-  FindManyOptions,
-  FindOneOptions,
-  Repository,
-} from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 
-import { BadRequestException, InternalException } from '@app/exceptions';
-import { NotFoundException } from '@app/exceptions/not-found.exception';
+import {
+  BadRequestException,
+  InternalException,
+  NotFoundException,
+} from '@app/exceptions';
 
 export default abstract class BaseService<T extends DeepPartial<T>> {
   constructor(private repository: Repository<T>) {}

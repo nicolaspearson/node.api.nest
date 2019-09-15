@@ -20,14 +20,14 @@ describe('AuthController (e2e)', () => {
   it('/auth/login (POST) => invalid credentials', () => {
     return request(app.getHttpServer())
       .post(`/${EnvService.get().API_BASE_PATH}/auth/login`)
-      .send('{"username": "invalid", "password": "invalid"}')
+      .send('{"email": "invalid", "password": "invalid"}')
       .expect(401);
   });
 
   it('/auth/login (POST) => valid credentials', () => {
     return request(app.getHttpServer())
       .post(`/${EnvService.get().API_BASE_PATH}/auth/login`)
-      .send('{"username": "john", "password": "change-me"}')
+      .send('{"email": "john@example.com", "password": "change-me"}')
       .expect(200);
   });
 });
