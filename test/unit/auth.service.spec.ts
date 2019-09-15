@@ -3,9 +3,9 @@ import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthService } from '@app/auth/auth.service';
+import { EnvService } from '@app/env';
 import { UserModule } from '@app/user/user.module';
 import { UserService } from '@app/user/user.service';
-import { EnvService } from '@app/env';
 
 describe('AuthService', () => {
   let service: AuthService;

@@ -12,7 +12,6 @@ export class EnvService {
     }
     this.inited = true;
     const environment = nconf.get('NODE_ENV') || 'development';
-    console.log(environment);
     nconf.argv().env();
     nconf.file(
       environment,

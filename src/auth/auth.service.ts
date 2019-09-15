@@ -1,14 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { UserService } from '@app/user/user.service';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+    this.logger.debug(`${AuthService.name} has been initialized`);
+  }
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.userService.findOne(username);
