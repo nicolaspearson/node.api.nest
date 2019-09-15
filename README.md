@@ -82,11 +82,11 @@ GET /me
 ```
 
 ```
-GET /hero/{heroId}
+GET /hero/:id
 ```
 
 ```
-GET /heroes
+GET /hero
 ```
 
 ```
@@ -94,11 +94,11 @@ POST /hero
 ```
 
 ```
-PUT /hero/{heroId}
+PUT /hero/:id
 ```
 
 ```
-DELETE /hero/{heroId}
+DELETE /hero/:id
 ```
 
 ## Migrations
