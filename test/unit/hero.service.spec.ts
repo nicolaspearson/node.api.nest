@@ -5,9 +5,12 @@ import { Repository } from 'typeorm';
 import Hero from '@app/entities/hero.entity';
 import { HeroService } from '@app/hero/hero.service';
 
+import { repositoryMockFactory } from './test-mocks';
+import { MockType } from './test-types';
+
 describe('HeroService', () => {
   let service: HeroService;
-  let repository: Repository<Hero>;
+  let repositoryMock: MockType<Repository<Hero>>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -15,13 +18,13 @@ describe('HeroService', () => {
         HeroService,
         {
           provide: getRepositoryToken(Hero),
-          useValue: Repository,
+          useFactory: repositoryMockFactory,
         },
       ],
     }).compile();
 
     service = module.get<HeroService>(HeroService);
-    repository = module.get<Repository<Hero>>(getRepositoryToken(Hero));
+    repositoryMock = module.get(getRepositoryToken(Hero));
   });
 
   it('should be defined', () => {
@@ -37,7 +40,7 @@ describe('HeroService', () => {
       age: 35,
       deletedAt: null,
     };
-    // jest.spyOn(repository, 'find').mockResolvedValueOnce([hero]);
-    // expect(await service.findAll()).toEqual([hero]);
+    repositoryMock.find.mockReturnValue([hero]);
+    expect(await service.findAll()).toEqual([hero]);
   });
 });
