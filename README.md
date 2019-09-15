@@ -49,17 +49,24 @@ npm run start:prod
 
 The app will start running at <http://localhost:3000>
 
-## Test
+**3. Test the app using jest**
+
+#### Run unit tests:
 
 ```bash
-# unit tests
-$ npm run test
+npm run test:unit
+```
 
-# e2e tests
-$ npm run test:e2e
+#### Run end to end tests:
 
-# test coverage
-$ npm run test:cov
+```bash
+npm run test:e2e
+```
+
+#### Run test coverage:
+
+```bash
+npm run test:cov
 ```
 
 ## Endpoints
