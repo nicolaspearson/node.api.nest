@@ -31,5 +31,3 @@ describe('AuthController (e2e)', () => {
       .expect(200);
   });
 });
-
-// curl -X POST http://localhost:3000/api/v1/auth/login -d '{"username": "john", "password": "change-me"}' -H "Content-Type: application/json"

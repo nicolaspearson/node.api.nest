@@ -11,11 +11,12 @@ export class EnvService {
       return;
     }
     this.inited = true;
-    const environment = nconf.get('NODE_ENV') || 'development';
     nconf.argv().env();
     nconf.file(
-      environment,
-      path.resolve(`dist/env/config.${environment.toLowerCase()}.json`),
+      EnvService.environment(),
+      path.resolve(
+        `dist/env/config.${EnvService.environment().toLowerCase()}.json`,
+      ),
     );
     nconf.file('default', path.resolve(`dist/env/config.default.json`));
   }
@@ -23,5 +24,9 @@ export class EnvService {
   public static get(): IEnvVariables {
     this.init();
     return nconf.get();
+  }
+
+  public static environment(): string {
+    return nconf.get('NODE_ENV') || 'development';
   }
 }
