@@ -5,8 +5,8 @@ import { Repository } from 'typeorm';
 import Hero from '@app/entities/hero.entity';
 import { HeroService } from '@app/hero/hero.service';
 
-import { repositoryMockFactory } from './test-mocks';
-import { MockType } from './test-types';
+import { repositoryMockFactory } from '../utils/test-mocks';
+import { MockType } from '../utils/test-types';
 
 describe('HeroService', () => {
   let service: HeroService;
