@@ -70,13 +70,14 @@ export class UserService extends BaseService<User> {
 
     // Create a token for the user
     delete user.password;
-    const tokenData = this.createToken({
+    const token = this.createToken({
       id: user.id,
       email: user.emailAddress,
     });
-    const cookie = this.createCookie(tokenData);
+    const cookie = this.createCookie(token);
     return {
       cookie,
+      token,
       user,
     };
   }
@@ -110,13 +111,14 @@ export class UserService extends BaseService<User> {
 
       // Create a token for the user
       delete userResult.password;
-      const tokenData = this.createToken({
+      const token = this.createToken({
         id: userResult.id,
         email: userResult.emailAddress,
       });
-      const cookie = this.createCookie(tokenData);
+      const cookie = this.createCookie(token);
       return {
         cookie,
+        token,
         user: userResult,
       };
     } catch (error) {

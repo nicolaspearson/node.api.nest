@@ -30,14 +30,4 @@ export class AuthService {
     }
     return undefined;
   }
-
-  login(cookieUser: CookieUser) {
-    const payload: TokenPayload = {
-      id: cookieUser.user.id,
-      email: cookieUser.user.emailAddress,
-    };
-    return {
-      accessToken: this.jwtService.sign(payload),
-    };
-  }
 }
