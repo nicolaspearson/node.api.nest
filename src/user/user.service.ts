@@ -8,6 +8,7 @@ import BaseService from '@app/base/base.service';
 import LoginUserDto from '@app/dto/user.login.dto';
 import RegisterUserDto from '@app/dto/user.register.dto';
 import User from '@app/entities/user.entity';
+import { EnvService } from '@app/env';
 import {
   BadRequestException,
   InternalException,
@@ -15,7 +16,6 @@ import {
 } from '@app/exceptions';
 import CookieUser from '@app/interfaces/cookie-user';
 import Token from '@app/interfaces/token';
-import TokenData from '@app/interfaces/token-data.interface';
 import TokenPayload from '@app/interfaces/token-payload.interface';
 
 @Injectable()
@@ -70,7 +70,10 @@ export class UserService extends BaseService<User> {
 
     // Create a token for the user
     delete user.password;
-    const tokenData = this.createToken(user);
+    const tokenData = this.createToken({
+      id: user.id,
+      email: user.emailAddress,
+    });
     const cookie = this.createCookie(tokenData);
     return {
       cookie,
@@ -96,8 +99,8 @@ export class UserService extends BaseService<User> {
 
       // Validate the provided password
       const valid = await this.validatePassword(
-        loginUserDto.password,
         userResult.password,
+        loginUserDto.password,
       );
       if (!valid) {
         throw new UnauthorizedException(
@@ -107,7 +110,10 @@ export class UserService extends BaseService<User> {
 
       // Create a token for the user
       delete userResult.password;
-      const tokenData = this.createToken(userResult);
+      const tokenData = this.createToken({
+        id: userResult.id,
+        email: userResult.emailAddress,
+      });
       const cookie = this.createCookie(tokenData);
       return {
         cookie,
@@ -121,22 +127,17 @@ export class UserService extends BaseService<User> {
     }
   }
 
-  public createToken(user: User): Token {
-    const expiresIn = 60 * 60; // 1 hour
-    const tokenPayload: TokenPayload = {
-      id: user.id,
-      email: user.emailAddress,
-    };
-    // Create a token
+  public createToken(tokenPayload: TokenPayload): Token {
     const accessToken = this.jwtService.sign(tokenPayload);
     const token: Token = new Token();
-    token.expiresIn = expiresIn;
     token.accessToken = accessToken;
     return token;
   }
 
-  public createCookie(tokenData: TokenData) {
-    return `Authorization=${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+  public createCookie(token: Token): string {
+    return `Authorization=${token.accessToken}; HttpOnly; Max-Age=${
+      EnvService.get().JWT_EXPIRATION
+    }`;
   }
 
   public async encryptPassword(password: string): Promise<string> {
@@ -153,7 +154,8 @@ export class UserService extends BaseService<User> {
     password: string,
   ): Promise<boolean> {
     try {
-      return await bcrypt.compare(dbPassword, password);
+      const result = await bcrypt.compare(password, dbPassword);
+      return result;
     } catch (error) {
       throw error;
     }

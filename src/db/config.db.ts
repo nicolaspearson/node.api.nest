@@ -17,6 +17,7 @@ const config: ConnectionOptions = {
   synchronize: EnvService.environment() !== 'production',
   entities: [path.resolve('dist/entities/*.js')],
   migrations: [path.resolve('dist/migrations/*.js')],
+  migrationsRun: true,
   cli: {
     migrationsDir: path.resolve('src/migrations'),
   },

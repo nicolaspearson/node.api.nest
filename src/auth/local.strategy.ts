@@ -4,6 +4,7 @@ import { Strategy } from 'passport-local';
 
 import { AuthService } from '@app/auth/auth.service';
 import { UnauthorizedException } from '@app/exceptions';
+import CookieUser from '@app/interfaces/cookie-user';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -14,11 +15,13 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     this.logger.debug(`${LocalStrategy.name} has been initialized`);
   }
 
-  async validate(emailAddress: string, password: string): Promise<any> {
-    const user = await this.authService.validateUser(emailAddress, password);
-    if (!user) {
+  async validate(emailAddress: string, password: string): Promise<CookieUser> {
+    const cookieUser:
+      | CookieUser
+      | undefined = await this.authService.validateUser(emailAddress, password);
+    if (!cookieUser) {
       throw new UnauthorizedException();
     }
-    return user;
+    return cookieUser;
   }
 }

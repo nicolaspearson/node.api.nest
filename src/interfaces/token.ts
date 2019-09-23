@@ -5,6 +5,4 @@ export default class Token {
     }
   }
   public accessToken: string;
-
-  public expiresIn?: number | string;
 }

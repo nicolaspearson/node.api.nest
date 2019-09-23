@@ -17,7 +17,10 @@ export class AuthService {
     this.logger.debug(`${AuthService.name} has been initialized`);
   }
 
-  async validateUser(emailAddress: string, password: string): Promise<any> {
+  async validateUser(
+    emailAddress: string,
+    password: string,
+  ): Promise<CookieUser | undefined> {
     const loginUserDto = new LoginUserDto();
     loginUserDto.emailAddress = emailAddress;
     loginUserDto.password = password;
@@ -25,13 +28,16 @@ export class AuthService {
     if (cookieUser) {
       return cookieUser;
     }
-    return null;
+    return undefined;
   }
 
-  async login(user: any) {
-    const payload: TokenPayload = { id: user.userId, email: user.emailAddress };
+  login(cookieUser: CookieUser) {
+    const payload: TokenPayload = {
+      id: cookieUser.user.id,
+      email: cookieUser.user.emailAddress,
+    };
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
   }
 }
