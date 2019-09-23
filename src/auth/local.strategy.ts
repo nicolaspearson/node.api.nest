@@ -11,7 +11,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   private readonly logger = new Logger(LocalStrategy.name);
 
   constructor(private readonly authService: AuthService) {
-    super();
+    super({ usernameField: 'emailAddress', passwordField: 'password' });
     this.logger.debug(`${LocalStrategy.name} has been initialized`);
   }
 
