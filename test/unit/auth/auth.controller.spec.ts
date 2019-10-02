@@ -51,8 +51,10 @@ describe('Auth Controller', () => {
 
   it('should return for login', async () => {
     const response = {
-      send: (body?: any) => body,
       setHeader: (header?: any) => header,
+      status: (status?: number) => {
+        return { send: (body?: any) => body, status };
+      },
     };
     expect(await controller.login({ user: cookieUser }, response)).toEqual(
       cookieUser.token,
