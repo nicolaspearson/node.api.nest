@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "~6.8.0",
     "@nestjs/typeorm": "~6.2.0",
     "bcrypt": "~3.0.6",
+    "class-transformer": "~0.2.3",
     "class-validator": "~0.10.1",
     "module-alias": "~2.2.2",
     "nconf": "~0.10.0",

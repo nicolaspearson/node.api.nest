@@ -1,4 +1,4 @@
-import { validate, ValidationError } from 'class-validator';
+import { HttpException } from '@nestjs/common';
 import { DeepPartial, Repository } from 'typeorm';
 
 import {
@@ -28,23 +28,6 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
 
   public validId(id: number): boolean {
     return id !== undefined && id > 0;
-  }
-
-  public async isValid(entity: T): Promise<boolean> {
-    try {
-      const errors: ValidationError[] = await validate(entity, {
-        validationError: { target: false, value: false },
-      });
-      if (errors.length > 0) {
-        throw new BadRequestException(errors);
-      }
-      return true;
-    } catch (error) {
-      if (error && error.isBoom) {
-        throw error;
-      }
-      throw new BadRequestException(error);
-    }
   }
 
   public async findAll(): Promise<T[]> {
@@ -103,10 +86,7 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
   public async save(entity: T): Promise<T> {
     try {
       // Check if the entity is valid
-      const entityIsValid = await this.isValid(entity);
-      if (!entityIsValid) {
-        throw new BadRequestException();
-      }
+      // await this.isValid(entity);
       // Execute the hook
       this.preSaveHook(entity);
       // Save the entity to the database
@@ -114,7 +94,7 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
       this.preResultHook(savedEntity);
       return savedEntity;
     } catch (error) {
-      if (error && error.isBoom) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
         throw error;
       }
       throw new InternalException();
@@ -124,8 +104,7 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
   public async update(id: number, entity: T): Promise<T> {
     try {
       // Check if the entity is valid
-      const entityIsValid = await this.isValid(entity);
-      if (!entityIsValid || !this.validId(id)) {
+      if (!this.validId(id)) {
         throw new BadRequestException();
       }
       const record = await this.findOneById(id);

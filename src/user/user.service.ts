@@ -130,7 +130,9 @@ export class UserService extends BaseService<User> {
   }
 
   public createToken(tokenPayload: TokenPayload): Token {
-    const accessToken = this.jwtService.sign(tokenPayload);
+    const accessToken = this.jwtService.sign(tokenPayload, {
+      expiresIn: EnvService.get().JWT_EXPIRATION,
+    });
     const token: Token = new Token();
     token.accessToken = accessToken;
     return token;
