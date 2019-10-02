@@ -16,6 +16,7 @@ export class AuthService {
     emailAddress: string,
     password: string,
   ): Promise<CookieUser | undefined> {
+    // Validates the users credentials using the local strategy.
     const loginUserDto = new LoginUserDto();
     loginUserDto.emailAddress = emailAddress;
     loginUserDto.password = password;

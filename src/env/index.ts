@@ -1,7 +1,7 @@
 import * as nconf from 'nconf';
 import * as path from 'path';
 
-import { IEnvVariables } from '@app/models/env-variables.interface';
+import { IEnvVariables } from '@app/interfaces/env-variables.interface';
 
 export class EnvService {
   static inited = false;

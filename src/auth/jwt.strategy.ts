@@ -19,6 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: TokenPayload): Promise<TokenPayload> {
+    // If the token is valid simply pass on the payload.
     return payload;
   }
 }
