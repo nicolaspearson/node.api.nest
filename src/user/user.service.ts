@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
@@ -46,6 +46,9 @@ export class UserService extends BaseService<User> {
   public preResultHook(user: User) {
     // Executed before the result is returned
     delete user.password;
+    delete user.createdAt;
+    delete user.deletedAt;
+    delete user.updatedAt;
   }
 
   async findOne(emailAddress: string): Promise<User | undefined> {
@@ -68,8 +71,9 @@ export class UserService extends BaseService<User> {
       password: hashedPassword,
     });
 
+    this.preResultHook(user);
+
     // Create a token for the user
-    delete user.password;
     const token = this.createToken({
       id: user.id,
       email: user.emailAddress,
@@ -109,8 +113,9 @@ export class UserService extends BaseService<User> {
         );
       }
 
+      this.preResultHook(userResult);
+
       // Create a token for the user
-      delete userResult.password;
       const token = this.createToken({
         id: userResult.id,
         email: userResult.emailAddress,
@@ -122,7 +127,7 @@ export class UserService extends BaseService<User> {
         user: userResult,
       };
     } catch (error) {
-      if (error && error.isBoom) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
         throw error;
       }
       throw new InternalException(error);

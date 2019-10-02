@@ -36,7 +36,7 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
       entities.map(item => this.preResultHook(item));
       return entities;
     } catch (error) {
-      if (error && error.isBoom) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
         throw error;
       }
       throw new InternalException();
@@ -49,10 +49,15 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
         throw new BadRequestException();
       }
       const entity: T = await this.repository.findOne(id);
+      if (!entity) {
+        throw new NotFoundException(
+          `The record with id (${id}) was not found.`,
+        );
+      }
       this.preResultHook(entity);
       return entity;
     } catch (error) {
-      if (error && error.isBoom) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
         throw error;
       }
       throw new InternalException();
@@ -67,7 +72,7 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
       const record = await this.findOneById(id);
       if (!record) {
         throw new NotFoundException(
-          `The requested record was not found: ${id}`,
+          `The record with id (${id}) was not found.`,
         );
       }
       // Execute the hook
@@ -76,7 +81,7 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
       this.preResultHook(record);
       return record;
     } catch (error) {
-      if (error && error.isBoom) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
         throw error;
       }
       throw new InternalException();
@@ -104,23 +109,23 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
   public async update(id: number, entity: T): Promise<T> {
     try {
       // Check if the entity is valid
-      if (!this.validId(id)) {
+      if ((entity && (entity as any).id !== id) || !this.validId(id)) {
         throw new BadRequestException();
       }
       const record = await this.findOneById(id);
       if (!record) {
         throw new NotFoundException(
-          `The requested record was not found: ${id}`,
+          `The record with id (${id}) was not found.`,
         );
       }
       // Execute the hook
       this.preUpdateHook(entity);
-      // Update the entity on the database
-      const updatedEntity: T = await this.repository.save(record);
+      // Update the entity in the database
+      const updatedEntity: T = await this.repository.save(entity);
       this.preResultHook(updatedEntity);
       return updatedEntity;
     } catch (error) {
-      if (error && error.isBoom) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
         throw error;
       }
       throw new InternalException();
