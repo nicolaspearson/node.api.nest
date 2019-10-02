@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2019-09-15T12:51:22.553Z",
+  "__export_date": "2019-10-02T18:11:01.395Z",
   "__export_source": "insomnia.desktop.app:v6.6.2",
   "resources": [
     {
@@ -9,7 +9,7 @@
       "authentication": {},
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"secret\"\n}"
+        "text": "{\n\t\"firstName\": \"tester\",\n\t\"lastName\": \"test\",\n\t\"emailAddress\": \"tester2@test.com\",\n\t\"password\": \"secret\"\n}"
       },
       "created": 1552426580478,
       "description": "",
@@ -23,7 +23,7 @@
       "isPrivate": false,
       "metaSortKey": -1552230507013,
       "method": "POST",
-      "modified": 1568551778056,
+      "modified": 1570039742275,
       "name": "Create User",
       "parameters": [],
       "parentId": "fld_224cbe2b98d540a59232440124078621",
@@ -61,7 +61,7 @@
       "authentication": {},
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"secret\"\n}"
+        "text": "{\n\t\"emailAddress\": \"steve.rogers@avengers.com\",\n\t\"password\": \"secret\"\n}"
       },
       "created": 1552426740223,
       "description": "",
@@ -75,7 +75,7 @@
       "isPrivate": false,
       "metaSortKey": -1552230506988,
       "method": "POST",
-      "modified": 1568551559395,
+      "modified": 1569262010967,
       "name": "Login",
       "parameters": [],
       "parentId": "fld_224cbe2b98d540a59232440124078621",
@@ -103,15 +103,16 @@
           "value": "application/json"
         },
         {
+          "disabled": false,
           "id": "pair_d3f1a31b2785476fac918bfd15ecc239",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjF9.pL0mBx3adBKYmOpgyObgX1jl2XoifJnpFhiKKs4wgO0"
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506963,
       "method": "POST",
-      "modified": 1568551625659,
+      "modified": 1570037530356,
       "name": "Create Hero",
       "parameters": [],
       "parentId": "fld_224cbe2b98d540a59232440124078621",
@@ -133,13 +134,13 @@
         {
           "id": "pair_a45be2eb068a46b9894c04ea6f40c930",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjF9.pL0mBx3adBKYmOpgyObgX1jl2XoifJnpFhiKKs4wgO0"
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506913,
       "method": "GET",
-      "modified": 1568551578294,
+      "modified": 1570034165586,
       "name": "Get Heroes",
       "parameters": [],
       "parentId": "fld_224cbe2b98d540a59232440124078621",
@@ -161,13 +162,13 @@
         {
           "id": "pair_a45be2eb068a46b9894c04ea6f40c930",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjF9.pL0mBx3adBKYmOpgyObgX1jl2XoifJnpFhiKKs4wgO0"
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506888,
       "method": "GET",
-      "modified": 1568551824732,
+      "modified": 1570038161899,
       "name": "Get Hero By Id",
       "parameters": [
         {
@@ -183,7 +184,7 @@
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero/1",
+      "url": "http://localhost:3000/api/v1/hero/2",
       "_type": "request"
     },
     {
@@ -191,7 +192,7 @@
       "authentication": {},
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"Hulk\",\n \t\"identity\": \"Bruce Banner\",\n\t\"hometown\": \"Chicago\",\n\t\"age\": 41\n}"
+        "text": "{\n\t\"id\": 6,\n\t\"name\": \"Hulk\",\n \t\"identity\": \"Bruce Banner\",\n\t\"hometown\": \"Chicago\",\n\t\"age\": 41\n}"
       },
       "created": 1552230496911,
       "description": "",
@@ -204,13 +205,13 @@
         {
           "id": "pair_c57086f80d0844c89547e9c344054f44",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjF9.pL0mBx3adBKYmOpgyObgX1jl2XoifJnpFhiKKs4wgO0"
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506863,
       "method": "PUT",
-      "modified": 1568551599442,
+      "modified": 1570039597104,
       "name": "Update Hero",
       "parameters": [],
       "parentId": "fld_224cbe2b98d540a59232440124078621",
@@ -219,7 +220,7 @@
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero/1",
+      "url": "http://localhost:3000/api/v1/hero/6",
       "_type": "request"
     },
     {
@@ -232,13 +233,13 @@
         {
           "id": "pair_1688207575fe4ca6abfa6bf6d834d12b",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjF9.pL0mBx3adBKYmOpgyObgX1jl2XoifJnpFhiKKs4wgO0"
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506813,
       "method": "DELETE",
-      "modified": 1568551606673,
+      "modified": 1570039582807,
       "name": "Delete Hero",
       "parameters": [],
       "parentId": "fld_224cbe2b98d540a59232440124078621",
@@ -265,9 +266,22 @@
     },
     {
       "_id": "jar_e383fdc4fb3b494d830266abe8810f5f",
-      "cookies": [],
+      "cookies": [
+        {
+          "creation": "2019-09-23T17:14:56.539Z",
+          "domain": "localhost",
+          "hostOnly": true,
+          "httpOnly": true,
+          "id": "3231989457114841",
+          "key": "Authorization",
+          "lastAccessed": "2019-10-02T16:34:46.609Z",
+          "path": "/api/v1/auth",
+          "pathIsDefault": true,
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
+        }
+      ],
       "created": 1552229648932,
-      "modified": 1552229648932,
+      "modified": 1570034086609,
       "name": "Default Jar",
       "parentId": "wrk_38c674b2b91d438f8d9dd13591ecba54",
       "_type": "cookie_jar"
