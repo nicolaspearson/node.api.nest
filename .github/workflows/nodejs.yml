@@ -10,8 +10,8 @@ jobs:
       - uses: minddocdev/actions-ci-yarn@master
       - name: yarn install, build, and test
         run: |
-          install
-          build
-          test:unit
+          yarn install
+          yarn build
+          yarn test:unit
         env:
           CI: true
