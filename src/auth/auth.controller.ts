@@ -26,6 +26,6 @@ export class AuthController {
   async login(@Request() req, @Response() res) {
     const cookieUser: CookieUser = req.user;
     res.setHeader('Set-Cookie', [cookieUser.cookie]);
-    return res.send(cookieUser.token);
+    return res.status(200).send(cookieUser.token);
   }
 }

@@ -1,6 +1,6 @@
 {
   "moduleNameMapper": {
-    "^@app(.*)$": "<rootDir>/../../src$1"
+    "^@app(.*)$": "<rootDir>/../../dist$1"
   },
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",

@@ -8,7 +8,7 @@ import { EnvService } from '@app/env';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -22,5 +22,9 @@ describe('AppController (e2e)', () => {
       .get(`/${EnvService.get().API_BASE_PATH}/`)
       .expect(200)
       .expect('Nest App');
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
