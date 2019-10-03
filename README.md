@@ -1,18 +1,20 @@
 # Node + Nest + Express
 
-A simple Node.js API, written using Typescript, and Nest with Express.
+A simple Node.js API, written using Typescript, and Nest.js with Express.
+
+For more information regarding Nest.js see the [official documentation.](https://docs.nestjs.com/)
 
 ## Getting Started
 
 **1. Clone the application**
 
-```bash
+```
 git clone https://github.com/nicolaspearson/node.api.nest.git
 ```
 
 **2. Start the database**
 
-```bash
+```
 cd docker
 docker-compose  up
 ```
@@ -21,13 +23,13 @@ docker-compose  up
 
 #### Install dependencies
 
-```bash
+```
 yarn install
 ```
 
 #### Run the app in development mode:
 
-```bash
+```
 npm run start
 ```
 
@@ -35,7 +37,7 @@ The app will start running at <http://localhost:3000>
 
 #### Run the app in watch mode:
 
-```bash
+```
 npm run start:dev
 ```
 
@@ -43,7 +45,7 @@ The app will start running at <http://localhost:3000>
 
 #### Run the app in production mode:
 
-```bash
+```
 npm run start:prod
 ```
 
@@ -53,53 +55,33 @@ The app will start running at <http://localhost:3000>
 
 #### Run unit tests:
 
-```bash
+```
 npm run test:unit
 ```
 
 #### Run end to end tests:
 
-```bash
+```
 npm run test:e2e
 ```
 
 #### Run test coverage:
 
-```bash
+```
 npm run test:cov
 ```
 
 ## Endpoints
 
-The following endpoints are available:
+### Swagger
 
-```
-POST /auth/login
-```
+Swagger has been integrated into the application, once the app is up and running visit <http://localhost:3000/api>
 
-```
-GET /me
-```
+See the official [documentation](https://docs.nestjs.com/recipes/swagger) for more information.
 
-```
-GET /hero/:id
-```
+### Insomnia (REST Client)
 
-```
-GET /hero
-```
-
-```
-POST /hero
-```
-
-```
-PUT /hero/:id
-```
-
-```
-DELETE /hero/:id
-```
+The easiest way to interact with the API is via the provided `./api/insomnia.json` file. Firstly, download [Insomnia](https://www.insomnia.rest/), then import the contents of aforementioned JSON file.
 
 ## Migrations
 
