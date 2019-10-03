@@ -10,7 +10,6 @@ import { EnvService } from '@app/env';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
-  let accessToken: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -44,7 +43,6 @@ describe('AuthController (e2e)', () => {
     expect(JSON.parse(result.text)).toEqual({
       accessToken: expect.any(String),
     });
-    accessToken = JSON.parse(result.text).accessToken;
   });
 
   afterAll(async () => {

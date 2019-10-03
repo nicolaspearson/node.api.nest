@@ -29,7 +29,7 @@ describe('UserController (e2e)', () => {
     await app.init();
   });
 
-  it('/user/register (POST) => valid object', async () => {
+  it('/user/register (POST)', async () => {
     const result = await request(app.getHttpServer())
       .post(`/${EnvService.get().API_BASE_PATH}/user/register`)
       .send({
@@ -47,10 +47,10 @@ describe('UserController (e2e)', () => {
         accessToken: expect.any(String),
       },
       user: {
+        id: expect.any(Number),
         firstName: 'John',
         lastName: 'Doe',
         emailAddress: 'john.doe@test.com',
-        id: expect.any(Number),
         enabled: true,
       },
     });
@@ -77,6 +77,22 @@ describe('UserController (e2e)', () => {
       .expect(401);
   });
 
+  it('/user/profile (GET)', async () => {
+    const result = await request(app.getHttpServer())
+      .get(`/${EnvService.get().API_BASE_PATH}/user/profile`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200);
+    expect(result).toBeDefined();
+    expect(result.text).toBeDefined();
+    expect(JSON.parse(result.text)).toEqual({
+      id: expect.any(Number),
+      firstName: 'John',
+      lastName: 'Doe',
+      emailAddress: 'john.doe@test.com',
+      enabled: true,
+    });
+  });
+
   it('/user/:id (DELETE)', async () => {
     const result = await request(app.getHttpServer())
       .delete(`/${EnvService.get().API_BASE_PATH}/user/${user.id}`)
@@ -85,10 +101,10 @@ describe('UserController (e2e)', () => {
     expect(result).toBeDefined();
     expect(result.text).toBeDefined();
     expect(JSON.parse(result.text)).toEqual({
+      id: expect.any(Number),
       firstName: 'John',
       lastName: 'Doe',
       emailAddress: 'john.doe@test.com',
-      id: expect.any(Number),
       enabled: true,
     });
   });
