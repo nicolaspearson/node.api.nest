@@ -6,13 +6,34 @@ module.exports = {
   clearMocks: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['src/**/*.{js,ts,mjs}'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/index.ts',
+    '!src/**/*.module.ts',
+    '!src/auth/**/*.strategy.ts',
+    '!src/db/**/*.ts',
+    '!src/exceptions/**/*.ts',
+    '!src/interfaces/**/*.ts',
+    '!src/migrations/**/*.ts',
+    '!src/seeds/**/*.ts',
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
 
   // The coverage reporters
-  coverageReporters: ['json-summary', 'text', 'lcov'],
+  coverageReporters: process.env.CI
+    ? ['lcovonly', 'text']
+    : ['json', 'lcov', 'text', 'clover'],
+
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+    },
+  },
 
   // An array of file extensions your modules use
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
