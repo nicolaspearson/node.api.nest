@@ -8,23 +8,7 @@ import { HeroService } from '@app/hero/hero.service';
 import { repositoryMockFactory } from '../utils/test-mocks';
 import { MockType } from '../utils/test-types';
 
-const hero: Hero = {
-  id: 1,
-  name: 'Iron Man',
-  identity: 'Tony Stark',
-  hometown: 'New York',
-  age: 35,
-  deletedAt: null,
-};
-
-const anotherHero: Hero = {
-  id: 1,
-  name: 'Hulk',
-  identity: 'Bruce Banner',
-  hometown: 'Chicago',
-  age: 41,
-  deletedAt: null,
-};
+import { heroOne, heroTwo } from '../utils/fixtures';
 
 describe('HeroService', () => {
   let service: HeroService;
@@ -49,33 +33,59 @@ describe('HeroService', () => {
     expect(service).toBeDefined();
   });
 
+  describe('hooks', () => {
+    it('preSaveHook should mutate hero', () => {
+      const saveHero = { ...heroOne };
+      expect(service.preSaveHook(saveHero));
+      expect(saveHero).not.toEqual(heroOne);
+    });
+
+    it('preUpdateHook should mutate hero', () => {
+      const updateHero = { ...heroOne };
+      expect(service.preUpdateHook(updateHero));
+      expect(updateHero).not.toEqual(heroOne);
+    });
+
+    it('preDeleteHook should mutate hero', () => {
+      const deleteHero = { ...heroOne };
+      expect(service.preDeleteHook(deleteHero));
+      expect(deleteHero).not.toEqual(heroOne);
+    });
+
+    it('preResultHook should mutate hero', () => {
+      const resultHero = { ...heroOne };
+      expect(service.preResultHook(resultHero));
+      expect(resultHero).not.toEqual(heroOne);
+    });
+  });
+
   it('should return for findAll', async () => {
-    repositoryMock.find.mockReturnValue([hero]);
-    expect(await service.findAll()).toEqual([hero]);
+    repositoryMock.find.mockReturnValue([heroOne]);
+    expect(await service.findAll()).toEqual([heroOne]);
   });
 
   it('should return for findOneById', async () => {
-    repositoryMock.findOne.mockReturnValue(hero);
-    expect(await service.findOneById(1)).toEqual(hero);
+    repositoryMock.findOne.mockReturnValue(heroOne);
+    expect(await service.findOneById(1)).toEqual(heroOne);
   });
 
   it('should return for delete', async () => {
-    repositoryMock.findOne.mockReturnValue(hero);
-    expect(await service.delete(1)).toEqual(hero);
+    repositoryMock.findOne.mockReturnValue(heroOne);
+    expect(await service.delete(1)).toEqual(heroOne);
   });
 
   it('should return for delete soft', async () => {
-    repositoryMock.findOne.mockReturnValue(hero);
-    expect(await service.deleteSoft(1)).toEqual(hero);
+    repositoryMock.findOne.mockReturnValue(heroOne);
+    expect(await service.deleteSoft(1)).toEqual(heroOne);
   });
 
   it('should return for save', async () => {
-    repositoryMock.findOne.mockReturnValue(hero);
-    expect(await service.save(hero)).toEqual(hero);
+    repositoryMock.findOne.mockReturnValue(heroOne);
+    expect(await service.save(heroOne)).toEqual(heroOne);
   });
 
   it('should return for update', async () => {
-    repositoryMock.findOne.mockReturnValue(hero);
-    expect(await service.save(anotherHero)).toEqual(anotherHero);
+    repositoryMock.findOne.mockReturnValue(heroOne);
+    expect(await service.save(heroTwo)).toEqual(heroTwo);
   });
 });

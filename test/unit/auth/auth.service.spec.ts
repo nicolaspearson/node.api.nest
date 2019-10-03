@@ -2,27 +2,14 @@ import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthService } from '@app/auth/auth.service';
-import User from '@app/entities/user.entity';
-import CookieUser from '@app/interfaces/cookie-user';
 import { UserService } from '@app/user/user.service';
 
+import { cookieUser, user } from '../utils/fixtures';
 import { MockType } from '../utils/test-types';
 
-const user: User = {
-  id: 1,
-  firstName: 'Tony',
-  lastName: 'Stark',
-  emailAddress: 'tony.stark@avengers.com',
-  password: 'secret',
-  enabled: true,
-};
-const cookieUser: CookieUser = {
-  user,
-  cookie: 'COOKIE',
-  token: { accessToken: 'fakeAccessToken' },
-};
+const loginMock = jest.fn(() => cookieUser);
 const userServiceMockFactory: () => MockType<UserService> = jest.fn(() => ({
-  login: jest.fn(() => cookieUser),
+  login: loginMock,
 })) as any;
 
 describe('AuthService', () => {
@@ -47,9 +34,16 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return for validateUser', async () => {
+  it('should return a cookie user if the credentials are valid', async () => {
     expect(
       await service.validateUser(user.emailAddress, user.password),
     ).toEqual(cookieUser);
+  });
+
+  it('should return undefined if the credentials are not valid', async () => {
+    loginMock.mockImplementationOnce(() => undefined);
+    expect(
+      await service.validateUser(user.emailAddress, user.password),
+    ).toEqual(undefined);
   });
 });

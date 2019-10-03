@@ -56,34 +56,39 @@ export class UserService extends BaseService<User> {
   }
 
   public async register(registerUserDto: RegisterUserDto): Promise<CookieUser> {
-    if (
-      await this.userRepository.findOne({
-        emailAddress: registerUserDto.emailAddress,
-      })
-    ) {
-      throw new BadRequestException(
-        'That email address is already registered!',
+    try {
+      if (await this.findOne(registerUserDto.emailAddress)) {
+        throw new BadRequestException(
+          'That email address is already registered!',
+        );
+      }
+      const hashedPassword = await this.encryptPassword(
+        registerUserDto.password,
       );
+      const user = await this.userRepository.save({
+        ...registerUserDto,
+        password: hashedPassword,
+      });
+
+      this.preResultHook(user);
+
+      // Create a token for the user
+      const token = this.createToken({
+        id: user.id,
+        email: user.emailAddress,
+      });
+      const cookie = this.createCookie(token);
+      return {
+        cookie,
+        token,
+        user,
+      };
+    } catch (error) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
+        throw error;
+      }
+      throw new InternalException(error);
     }
-    const hashedPassword = await this.encryptPassword(registerUserDto.password);
-    const user = await this.userRepository.save({
-      ...registerUserDto,
-      password: hashedPassword,
-    });
-
-    this.preResultHook(user);
-
-    // Create a token for the user
-    const token = this.createToken({
-      id: user.id,
-      email: user.emailAddress,
-    });
-    const cookie = this.createCookie(token);
-    return {
-      cookie,
-      token,
-      user,
-    };
   }
 
   public async login(loginUserDto: LoginUserDto): Promise<CookieUser> {
@@ -104,7 +109,9 @@ export class UserService extends BaseService<User> {
 
       if (!userResult || !isUserValid) {
         // User not found / disabled
-        throw new UnauthorizedException('Invalid credentials supplied');
+        throw new UnauthorizedException(
+          'Invalid email address / password supplied',
+        );
       }
 
       // Validate the provided password
@@ -154,24 +161,15 @@ export class UserService extends BaseService<User> {
     }`;
   }
 
-  public async encryptPassword(password: string): Promise<string> {
-    try {
-      const salt: string = await bcrypt.genSalt(10);
-      return await bcrypt.hash(password, salt);
-    } catch (error) {
-      throw error;
-    }
+  private async encryptPassword(password: string): Promise<string> {
+    const salt: string = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
   }
 
   private async validatePassword(
     dbPassword: string,
     password: string,
   ): Promise<boolean> {
-    try {
-      const result = await bcrypt.compare(password, dbPassword);
-      return result;
-    } catch (error) {
-      throw error;
-    }
+    return await bcrypt.compare(password, dbPassword);
   }
 }

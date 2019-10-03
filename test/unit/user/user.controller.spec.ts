@@ -9,6 +9,15 @@ import User from '@app/entities/user.entity';
 import { UserController } from '@app/user/user.controller';
 import { UserService } from '@app/user/user.service';
 
+import { cookieUser, registerUserDto, user } from '../utils/fixtures';
+import { MockType } from '../utils/test-types';
+
+const userServiceMockFactory: () => MockType<UserService> = jest.fn(() => ({
+  delete: jest.fn(() => user),
+  findOneById: jest.fn(() => user),
+  register: jest.fn(() => cookieUser),
+})) as any;
+
 describe('User Controller', () => {
   let controller: UserController;
 
@@ -24,7 +33,10 @@ describe('User Controller', () => {
       ],
       controllers: [UserController],
       providers: [
-        UserService,
+        {
+          provide: UserService,
+          useFactory: userServiceMockFactory,
+        },
         {
           provide: getRepositoryToken(User),
           useValue: Repository,
@@ -37,5 +49,23 @@ describe('User Controller', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('should return user upon successful registration', async () => {
+    expect(await controller.registerUser(registerUserDto)).toMatchObject({
+      cookie: expect.any(String),
+      token: {
+        accessToken: expect.any(String),
+      },
+      user,
+    });
+  });
+
+  it('should return profile correctly', async () => {
+    expect(await controller.getProfile({ user })).toMatchObject(user);
+  });
+
+  it('should return user upon successful deletion', async () => {
+    expect(await controller.deleteUser(String(user.id))).toMatchObject(user);
   });
 });
