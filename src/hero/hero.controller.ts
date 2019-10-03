@@ -52,6 +52,6 @@ export class HeroController {
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   deleteHero(@Param('id') id: string) {
-    return this.heroService.delete(Number(id));
+    return this.heroService.deleteSoft(Number(id));
   }
 }

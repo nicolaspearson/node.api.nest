@@ -30,7 +30,7 @@ describe('AuthController (e2e)', () => {
   it('/auth/login (POST) => invalid credentials', () => {
     return request(app.getHttpServer())
       .post(`/${EnvService.get().API_BASE_PATH}/auth/login`)
-      .send('{"emailAddress": "invalid", "password": "invalid"}')
+      .send({ emailAddress: 'invalid', password: 'invalid' })
       .expect(401);
   });
 
@@ -45,21 +45,6 @@ describe('AuthController (e2e)', () => {
       accessToken: expect.any(String),
     });
     accessToken = JSON.parse(result.text).accessToken;
-  });
-
-  it('/me (GET)', async () => {
-    const result = await request(app.getHttpServer())
-      .get(`/${EnvService.get().API_BASE_PATH}/me`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(200);
-    expect(result).toBeDefined();
-    expect(result.text).toBeDefined();
-    expect(JSON.parse(result.text)).toEqual({
-      id: 1,
-      email: 'steve.rogers@avengers.com',
-      iat: expect.any(Number),
-      exp: expect.any(Number),
-    });
   });
 
   afterAll(async () => {

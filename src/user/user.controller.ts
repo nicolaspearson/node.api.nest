@@ -1,4 +1,16 @@
-import { Body, Controller, Injectable, Logger, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Injectable,
+  Logger,
+  Param,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import RegisterUserDto from '@app/dto/user.register.dto';
 import { UserService } from './user.service';
@@ -15,5 +27,17 @@ export class UserController {
   @Post('register')
   registerUser(@Body() registerUserDto: RegisterUserDto) {
     return this.userService.register(registerUserDto);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile')
+  getProfile(@Request() req) {
+    return this.userService.findOneById(req.user.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {
+    return this.userService.delete(Number(id));
   }
 }

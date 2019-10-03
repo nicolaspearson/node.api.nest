@@ -89,6 +89,7 @@ export class UserService extends BaseService<User> {
   public async login(loginUserDto: LoginUserDto): Promise<CookieUser> {
     try {
       let userResult: User;
+      let isUserValid = true;
       try {
         // Fetch the user from the database
         userResult = await this.userRepository.findOne({
@@ -98,6 +99,10 @@ export class UserService extends BaseService<User> {
           },
         });
       } catch (error) {
+        isUserValid = false;
+      }
+
+      if (!userResult || !isUserValid) {
         // User not found / disabled
         throw new UnauthorizedException('Invalid credentials supplied');
       }

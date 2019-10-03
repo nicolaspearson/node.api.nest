@@ -32,7 +32,9 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
 
   public async findAll(): Promise<T[]> {
     try {
-      const entities: T[] = await this.repository.find();
+      const entities: T[] = await this.repository.find({
+        where: { deletedAt: null },
+      });
       entities.map(item => this.preResultHook(item));
       return entities;
     } catch (error) {
@@ -48,7 +50,9 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
       if (!this.validId(id) || isNaN(id)) {
         throw new BadRequestException();
       }
-      const entity: T = await this.repository.findOne(id);
+      const entity: T = await this.repository.findOne(id, {
+        where: { deletedAt: null },
+      });
       if (!entity) {
         throw new NotFoundException(
           `The record with id (${id}) was not found.`,
@@ -78,6 +82,30 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
       // Execute the hook
       this.preDeleteHook(record);
       await this.repository.delete(id);
+      this.preResultHook(record);
+      return record;
+    } catch (error) {
+      if (error && (error.isBoom || error instanceof HttpException)) {
+        throw error;
+      }
+      throw new InternalException();
+    }
+  }
+
+  public async deleteSoft(id: number): Promise<T> {
+    try {
+      if (!this.validId(id)) {
+        throw new BadRequestException();
+      }
+      const record = await this.findOneById(id);
+      if (!record) {
+        throw new NotFoundException(
+          `The record with id (${id}) was not found.`,
+        );
+      }
+      // Execute the hook
+      this.preDeleteHook(record);
+      await this.repository.save(record);
       this.preResultHook(record);
       return record;
     } catch (error) {

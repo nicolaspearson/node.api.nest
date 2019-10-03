@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2019-10-02T18:11:01.395Z",
+  "__export_date": "2019-10-03T20:47:33.649Z",
   "__export_source": "insomnia.desktop.app:v6.6.2",
   "resources": [
     {
@@ -9,7 +9,7 @@
       "authentication": {},
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"firstName\": \"tester\",\n\t\"lastName\": \"test\",\n\t\"emailAddress\": \"tester2@test.com\",\n\t\"password\": \"secret\"\n}"
+        "text": "{\n\t\"firstName\": \"tester\",\n\t\"lastName\": \"test\",\n\t\"emailAddress\": \"tester@test.com\",\n\t\"password\": \"secret\"\n}"
       },
       "created": 1552426580478,
       "description": "",
@@ -21,19 +21,31 @@
         }
       ],
       "isPrivate": false,
-      "metaSortKey": -1552230507013,
+      "metaSortKey": -1552230507313,
       "method": "POST",
-      "modified": 1570039742275,
-      "name": "Create User",
+      "modified": 1570135536815,
+      "name": "Register User",
       "parameters": [],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "parentId": "fld_f22976a9655f41099ca23d9b4dd3e8e4",
       "settingDisableRenderRequestBody": false,
       "settingEncodeUrl": true,
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/user/register",
+      "url": "{{ base_url  }}/api/v1/user/register",
       "_type": "request"
+    },
+    {
+      "_id": "fld_f22976a9655f41099ca23d9b4dd3e8e4",
+      "created": 1570134814025,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1552230507113,
+      "modified": 1570134829235,
+      "name": "User",
+      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "_type": "request_group"
     },
     {
       "_id": "fld_224cbe2b98d540a59232440124078621",
@@ -57,34 +69,59 @@
       "_type": "workspace"
     },
     {
-      "_id": "req_b78168216a6741adbe05e13aee4e6249",
+      "_id": "req_cbe36d0beed54674aee5fd6e2a4112d1",
       "authentication": {},
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n\t\"emailAddress\": \"steve.rogers@avengers.com\",\n\t\"password\": \"secret\"\n}"
-      },
-      "created": 1552426740223,
+      "body": {},
+      "created": 1570134706213,
       "description": "",
       "headers": [
         {
-          "id": "pair_d5f31352fca2404da0fa7bb377b91107",
-          "name": "Content-Type",
-          "value": "application/json"
+          "id": "pair_a45be2eb068a46b9894c04ea6f40c930",
+          "name": "Authorization",
+          "value": "Bearer {{ token  }}"
         }
       ],
       "isPrivate": false,
-      "metaSortKey": -1552230506988,
-      "method": "POST",
-      "modified": 1569262010967,
-      "name": "Login",
+      "metaSortKey": -1552230507238,
+      "method": "GET",
+      "modified": 1570135505536,
+      "name": "Get User Profile",
       "parameters": [],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "parentId": "fld_f22976a9655f41099ca23d9b4dd3e8e4",
       "settingDisableRenderRequestBody": false,
       "settingEncodeUrl": true,
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/auth/login",
+      "url": "{{ base_url  }}/api/v1/user/profile",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8264fc6c9fcb436094ae7f501c13d205",
+      "authentication": {},
+      "body": {},
+      "created": 1570134770285,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_1688207575fe4ca6abfa6bf6d834d12b",
+          "name": "Authorization",
+          "value": "Bearer {{ token  }}"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1552230507213,
+      "method": "DELETE",
+      "modified": 1570135540800,
+      "name": "Delete User",
+      "parameters": [],
+      "parentId": "fld_f22976a9655f41099ca23d9b4dd3e8e4",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/api/v1/user/27",
       "_type": "request"
     },
     {
@@ -106,23 +143,35 @@
           "disabled": false,
           "id": "pair_d3f1a31b2785476fac918bfd15ecc239",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
+          "value": "Bearer {{ token  }}"
         }
       ],
       "isPrivate": false,
-      "metaSortKey": -1552230506963,
+      "metaSortKey": -1552230507013,
       "method": "POST",
-      "modified": 1570037530356,
+      "modified": 1570135343653,
       "name": "Create Hero",
       "parameters": [],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "parentId": "fld_54c0d3c6b0a1479db215b201a7959fda",
       "settingDisableRenderRequestBody": false,
       "settingEncodeUrl": true,
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero",
+      "url": "{{ base_url  }}/api/v1/hero",
       "_type": "request"
+    },
+    {
+      "_id": "fld_54c0d3c6b0a1479db215b201a7959fda",
+      "created": 1570134891668,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1552230507038,
+      "modified": 1570134894592,
+      "name": "Hero",
+      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "_type": "request_group"
     },
     {
       "_id": "req_f95256b7de2344c9aaa73a7e80bea0e1",
@@ -134,57 +183,22 @@
         {
           "id": "pair_a45be2eb068a46b9894c04ea6f40c930",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
+          "value": "Bearer {{ token  }}"
         }
       ],
       "isPrivate": false,
-      "metaSortKey": -1552230506913,
+      "metaSortKey": -1552230506963,
       "method": "GET",
-      "modified": 1570034165586,
+      "modified": 1570135253069,
       "name": "Get Heroes",
       "parameters": [],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "parentId": "fld_54c0d3c6b0a1479db215b201a7959fda",
       "settingDisableRenderRequestBody": false,
       "settingEncodeUrl": true,
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero",
-      "_type": "request"
-    },
-    {
-      "_id": "req_9ed9aae79b234fb6a204dc72976541f7",
-      "authentication": {},
-      "body": {},
-      "created": 1552494700825,
-      "description": "",
-      "headers": [
-        {
-          "id": "pair_a45be2eb068a46b9894c04ea6f40c930",
-          "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
-        }
-      ],
-      "isPrivate": false,
-      "metaSortKey": -1552230506888,
-      "method": "GET",
-      "modified": 1570038161899,
-      "name": "Get Hero By Id",
-      "parameters": [
-        {
-          "disabled": false,
-          "id": "pair_de803e13725e461aa77168f442d1c0ea",
-          "name": "id",
-          "value": "1"
-        }
-      ],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
-      "settingDisableRenderRequestBody": false,
-      "settingEncodeUrl": true,
-      "settingRebuildPath": true,
-      "settingSendCookies": true,
-      "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero/2",
+      "url": "{{ base_url  }}/api/v1/hero",
       "_type": "request"
     },
     {
@@ -205,22 +219,22 @@
         {
           "id": "pair_c57086f80d0844c89547e9c344054f44",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
+          "value": "Bearer {{ token  }}"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506863,
       "method": "PUT",
-      "modified": 1570039597104,
+      "modified": 1570135376676,
       "name": "Update Hero",
       "parameters": [],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "parentId": "fld_54c0d3c6b0a1479db215b201a7959fda",
       "settingDisableRenderRequestBody": false,
       "settingEncodeUrl": true,
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero/6",
+      "url": "{{ base_url  }}/api/v1/hero/6",
       "_type": "request"
     },
     {
@@ -233,23 +247,101 @@
         {
           "id": "pair_1688207575fe4ca6abfa6bf6d834d12b",
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
+          "value": "Bearer {{ token  }}"
         }
       ],
       "isPrivate": false,
       "metaSortKey": -1552230506813,
       "method": "DELETE",
-      "modified": 1570039582807,
+      "modified": 1570135394358,
       "name": "Delete Hero",
       "parameters": [],
-      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "parentId": "fld_54c0d3c6b0a1479db215b201a7959fda",
       "settingDisableRenderRequestBody": false,
       "settingEncodeUrl": true,
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "http://localhost:3000/api/v1/hero/1",
+      "url": "{{ base_url  }}/api/v1/hero/6",
       "_type": "request"
+    },
+    {
+      "_id": "req_9ed9aae79b234fb6a204dc72976541f7",
+      "authentication": {},
+      "body": {},
+      "created": 1552494700825,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_a45be2eb068a46b9894c04ea6f40c930",
+          "name": "Authorization",
+          "value": "Bearer {{ token  }}"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1552230506913,
+      "method": "GET",
+      "modified": 1570135404083,
+      "name": "Get Hero By Id",
+      "parameters": [
+        {
+          "disabled": false,
+          "id": "pair_de803e13725e461aa77168f442d1c0ea",
+          "name": "id",
+          "value": "1"
+        }
+      ],
+      "parentId": "fld_54c0d3c6b0a1479db215b201a7959fda",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/api/v1/hero/6",
+      "_type": "request"
+    },
+    {
+      "_id": "req_b78168216a6741adbe05e13aee4e6249",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"emailAddress\": \"steve.rogers@avengers.com\",\n\t\"password\": \"secret\"\n}"
+      },
+      "created": 1552426740223,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_d5f31352fca2404da0fa7bb377b91107",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1552230507138,
+      "method": "POST",
+      "modified": 1570135591712,
+      "name": "Login",
+      "parameters": [],
+      "parentId": "fld_c6b47a675f0b4f2ab39d0b1e78c99361",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/api/v1/auth/login",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_c6b47a675f0b4f2ab39d0b1e78c99361",
+      "created": 1570135577971,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1552230507163,
+      "modified": 1570135585736,
+      "name": "Auth",
+      "parentId": "fld_224cbe2b98d540a59232440124078621",
+      "_type": "request_group"
     },
     {
       "_id": "env_bb97d6e58b484768bb78b272bbd4bdeb",
@@ -272,19 +364,37 @@
           "domain": "localhost",
           "hostOnly": true,
           "httpOnly": true,
-          "id": "3231989457114841",
+          "id": "09974636288037275",
           "key": "Authorization",
-          "lastAccessed": "2019-10-02T16:34:46.609Z",
+          "lastAccessed": "2019-10-03T20:45:52.661Z",
           "path": "/api/v1/auth",
           "pathIsDefault": true,
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMDM0MDg2LCJleHAiOjE1NzAxMjA0ODZ9.9S_QvU9dTC3rjPFjpISrqwvtRdYpsGAXce3ibtC9bYE"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdGV2ZS5yb2dlcnNAYXZlbmdlcnMuY29tIiwiaWF0IjoxNTcwMTM1NTUyLCJleHAiOjE1NzAyMjE5NTJ9.BY4Tam5G-zuxKadLtwLu6gS3rdJSSUNAXqs1anGN99g"
         }
       ],
       "created": 1552229648932,
-      "modified": 1570034086609,
+      "modified": 1570135552662,
       "name": "Default Jar",
       "parentId": "wrk_38c674b2b91d438f8d9dd13591ecba54",
       "_type": "cookie_jar"
+    },
+    {
+      "_id": "env_de19764bdfe544f8ae4735519b2d75a9",
+      "color": "#00c800",
+      "created": 1570135065841,
+      "data": {
+        "base_url": "http://localhost:3000",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImVtYWlsIjoidGVzdGVyMTBAdGVzdC5jb20iLCJpYXQiOjE1NzAxMzU0ODAsImV4cCI6MTU3MDIyMTg4MH0.4MpXBUMODwEnJhMl1MIaJg6hCG_QkPsOaiKP4S0AZus"
+      },
+      "dataPropertyOrder": {
+        "&": ["base_url", "token"]
+      },
+      "isPrivate": false,
+      "metaSortKey": 1570135065841,
+      "modified": 1570135513911,
+      "name": "Development",
+      "parentId": "env_bb97d6e58b484768bb78b272bbd4bdeb",
+      "_type": "environment"
     }
   ]
 }
