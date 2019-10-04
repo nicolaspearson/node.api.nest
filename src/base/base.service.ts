@@ -99,8 +99,6 @@ export default abstract class BaseService<T extends DeepPartial<T>> {
 
   public async save(entity: T): Promise<T> {
     try {
-      // Check if the entity is valid
-      // await this.isValid(entity);
       // Execute the hook
       this.preSaveHook(entity);
       // Save the entity to the database

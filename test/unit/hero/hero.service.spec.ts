@@ -184,24 +184,24 @@ describe('HeroService', () => {
 
   describe('update', () => {
     it('should throw if database error', async () => {
-      repositoryMock.findOne.mockReturnValue(heroOne);
+      repositoryMock.findOne.mockReturnValue(heroTwo);
       repositoryMock.save.mockImplementationOnce(() => {
         throw new Error();
       });
-      await expect(service.update(heroOne.id, heroOne)).rejects.toThrowError(
+      await expect(service.update(heroTwo.id, heroTwo)).rejects.toThrowError(
         InternalException,
       );
     });
 
     it('should throw BadRequestException if id is not valid', async () => {
-      await expect(service.update(heroOne.id, heroTwo)).rejects.toThrowError(
+      await expect(service.update(999, heroTwo)).rejects.toThrowError(
         BadRequestException,
       );
     });
 
     it('should throw NotFoundException if record does not exist', async () => {
       repositoryMock.findOne.mockReturnValue(undefined);
-      await expect(service.update(heroOne.id, heroOne)).rejects.toThrowError(
+      await expect(service.update(heroTwo.id, heroTwo)).rejects.toThrowError(
         NotFoundException,
       );
     });
