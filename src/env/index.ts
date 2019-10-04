@@ -27,6 +27,6 @@ export class EnvService {
   }
 
   public static environment(): string {
-    return nconf.get('NODE_ENV') || 'development';
+    return nconf.get('NODE_ENV') ? nconf.get('NODE_ENV') : 'development';
   }
 }
