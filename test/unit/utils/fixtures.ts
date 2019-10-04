@@ -3,6 +3,8 @@ import RegisterUserDto from '@app/dto/user.register.dto';
 import Hero from '@app/entities/hero.entity';
 import User from '@app/entities/user.entity';
 import CookieUser from '@app/interfaces/cookie-user';
+import CreateHeroDto from '@app/dto/hero.create.dto';
+import UpdateHeroDto from '@app/dto/hero.update.dto';
 
 export const user: User = {
   id: 1,
@@ -64,7 +66,7 @@ export const heroOne: Hero = {
 };
 
 export const heroTwo: Hero = {
-  id: 1,
+  id: 2,
   name: 'Hulk',
   identity: 'Bruce Banner',
   hometown: 'Chicago',
@@ -72,4 +74,19 @@ export const heroTwo: Hero = {
   createdAt: new Date('2019-01-01 00:00:00'),
   updatedAt: new Date('2019-01-01 00:00:00'),
   deletedAt: undefined,
+};
+
+export const createHeroDto: CreateHeroDto = {
+  name: 'Thor',
+  identity: 'Unknown',
+  hometown: 'Asgard',
+  age: 240,
+};
+
+export const updateHeroDto: UpdateHeroDto = {
+  id: 2,
+  name: 'Hulk',
+  identity: 'Bruce Banner',
+  hometown: 'Chicago',
+  age: 41,
 };
