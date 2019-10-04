@@ -1,10 +1,10 @@
+import CreateHeroDto from '@app/dto/hero.create.dto';
+import UpdateHeroDto from '@app/dto/hero.update.dto';
 import LoginUserDto from '@app/dto/user.login.dto';
 import RegisterUserDto from '@app/dto/user.register.dto';
 import Hero from '@app/entities/hero.entity';
 import User from '@app/entities/user.entity';
 import CookieUser from '@app/interfaces/cookie-user';
-import CreateHeroDto from '@app/dto/hero.create.dto';
-import UpdateHeroDto from '@app/dto/hero.update.dto';
 
 export const user: User = {
   id: 1,

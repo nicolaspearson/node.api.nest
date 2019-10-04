@@ -12,6 +12,6 @@ jobs:
         run: |
           yarn install
           yarn build
-          yarn test:unit
+          yarn test:cov
         env:
           CI: true

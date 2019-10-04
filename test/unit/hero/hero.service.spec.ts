@@ -2,6 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import {
+  BadRequestException,
+  InternalException,
+  NotFoundException,
+} from '@app/exceptions';
+
 import Hero from '@app/entities/hero.entity';
 import { HeroService } from '@app/hero/hero.service';
 
@@ -59,33 +65,150 @@ describe('HeroService', () => {
     });
   });
 
-  it('should return for findAll', async () => {
-    repositoryMock.find.mockReturnValue([heroOne]);
-    expect(await service.findAll()).toEqual([heroOne]);
+  describe('findAll', () => {
+    it('should throw if database error', async () => {
+      repositoryMock.find.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      await expect(service.findAll()).rejects.toThrowError(InternalException);
+    });
+
+    it('should return successfully for findAll', async () => {
+      repositoryMock.find.mockReturnValue([heroOne]);
+      expect(await service.findAll()).toEqual([heroOne]);
+    });
   });
 
-  it('should return for findOneById', async () => {
-    repositoryMock.findOne.mockReturnValue(heroOne);
-    expect(await service.findOneById(1)).toEqual(heroOne);
+  describe('findOneById', () => {
+    it('should throw if database error', async () => {
+      repositoryMock.findOne.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      await expect(service.findOneById(heroOne.id)).rejects.toThrowError(
+        InternalException,
+      );
+    });
+
+    it('should throw BadRequestException if id is not valid', async () => {
+      await expect(service.findOneById(undefined)).rejects.toThrowError(
+        BadRequestException,
+      );
+    });
+
+    it('should throw NotFoundException if record does not exist', async () => {
+      repositoryMock.findOne.mockReturnValue(undefined);
+      await expect(service.findOneById(heroOne.id)).rejects.toThrowError(
+        NotFoundException,
+      );
+    });
+
+    it('should return successfully for findOneById', async () => {
+      repositoryMock.findOne.mockReturnValue(heroOne);
+      expect(await service.findOneById(1)).toEqual(heroOne);
+    });
   });
 
-  it('should return for delete', async () => {
-    repositoryMock.findOne.mockReturnValue(heroOne);
-    expect(await service.delete(1)).toEqual(heroOne);
+  describe('delete', () => {
+    it('should throw if database error', async () => {
+      repositoryMock.findOne.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      await expect(service.delete(heroOne.id)).rejects.toThrowError(
+        InternalException,
+      );
+    });
+
+    it('should throw BadRequestException if id is not valid', async () => {
+      await expect(service.delete(undefined)).rejects.toThrowError(
+        BadRequestException,
+      );
+    });
+
+    it('should throw NotFoundException if record does not exist', async () => {
+      repositoryMock.findOne.mockReturnValue(undefined);
+      await expect(service.delete(heroOne.id)).rejects.toThrowError(
+        NotFoundException,
+      );
+    });
+
+    it('should return successfully for delete', async () => {
+      repositoryMock.findOne.mockReturnValue(heroOne);
+      expect(await service.delete(heroOne.id)).toEqual(heroOne);
+    });
   });
 
-  it('should return for delete soft', async () => {
-    repositoryMock.findOne.mockReturnValue(heroOne);
-    expect(await service.deleteSoft(1)).toEqual(heroOne);
+  describe('deleteSoft', () => {
+    it('should throw if database error', async () => {
+      repositoryMock.findOne.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      await expect(service.deleteSoft(heroOne.id)).rejects.toThrowError(
+        InternalException,
+      );
+    });
+
+    it('should throw BadRequestException if id is not valid', async () => {
+      await expect(service.deleteSoft(undefined)).rejects.toThrowError(
+        BadRequestException,
+      );
+    });
+
+    it('should throw NotFoundException if record does not exist', async () => {
+      repositoryMock.findOne.mockReturnValue(undefined);
+      await expect(service.deleteSoft(heroOne.id)).rejects.toThrowError(
+        NotFoundException,
+      );
+    });
+
+    it('should return successfully for deleteSoft', async () => {
+      repositoryMock.findOne.mockReturnValue(heroOne);
+      expect(await service.deleteSoft(heroOne.id)).toEqual(heroOne);
+    });
   });
 
-  it('should return for save', async () => {
-    repositoryMock.findOne.mockReturnValue(heroOne);
-    expect(await service.save(heroOne)).toEqual(heroOne);
+  describe('save', () => {
+    it('should throw if database error', async () => {
+      repositoryMock.save.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      await expect(service.save(heroOne)).rejects.toThrowError(
+        InternalException,
+      );
+    });
+
+    it('should return successfully for save', async () => {
+      repositoryMock.findOne.mockReturnValue(heroOne);
+      expect(await service.save(heroOne)).toEqual(heroOne);
+    });
   });
 
-  it('should return for update', async () => {
-    repositoryMock.findOne.mockReturnValue(heroOne);
-    expect(await service.save(heroTwo)).toEqual(heroTwo);
+  describe('update', () => {
+    it('should throw if database error', async () => {
+      repositoryMock.findOne.mockReturnValue(heroOne);
+      repositoryMock.save.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      await expect(service.update(heroOne.id, heroOne)).rejects.toThrowError(
+        InternalException,
+      );
+    });
+
+    it('should throw BadRequestException if id is not valid', async () => {
+      await expect(service.update(heroOne.id, heroTwo)).rejects.toThrowError(
+        BadRequestException,
+      );
+    });
+
+    it('should throw NotFoundException if record does not exist', async () => {
+      repositoryMock.findOne.mockReturnValue(undefined);
+      await expect(service.update(heroOne.id, heroOne)).rejects.toThrowError(
+        NotFoundException,
+      );
+    });
+
+    it('should return successfully for update', async () => {
+      repositoryMock.findOne.mockReturnValue(heroOne);
+      expect(await service.update(heroTwo.id, heroTwo)).toEqual(heroTwo);
+    });
   });
 });

@@ -84,7 +84,7 @@ export class UserService extends BaseService<User> {
         user,
       };
     } catch (error) {
-      if (error && (error.isBoom || error instanceof HttpException)) {
+      if (error && error instanceof HttpException) {
         throw error;
       }
       throw new InternalException(error);
@@ -139,7 +139,7 @@ export class UserService extends BaseService<User> {
         user: userResult,
       };
     } catch (error) {
-      if (error && (error.isBoom || error instanceof HttpException)) {
+      if (error && error instanceof HttpException) {
         throw error;
       }
       throw new InternalException(error);

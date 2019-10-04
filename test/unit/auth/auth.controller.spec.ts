@@ -35,7 +35,7 @@ describe('Auth Controller', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return for login', async () => {
+  it('should return cookie user upon successful login', async () => {
     const response = {
       setHeader: (header?: any) => header,
       status: (status?: number) => {
