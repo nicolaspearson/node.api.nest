@@ -1,23 +1,23 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString, Length } from 'class-validator';
 
 export default class CreateHeroDto {
-  @ApiModelProperty()
+  @ApiProperty()
   @IsString()
   @Length(1, 500)
   public readonly name: string;
 
-  @ApiModelProperty()
+  @ApiProperty()
   @IsString()
   @Length(1, 500)
   public readonly identity: string;
 
-  @ApiModelProperty()
+  @ApiProperty()
   @IsString()
   @Length(1, 500)
   public readonly hometown: string;
 
-  @ApiModelProperty()
+  @ApiProperty()
   @IsNumber()
   public readonly age: number;
 }
