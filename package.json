@@ -56,7 +56,7 @@
     "@types/supertest": "~2.0.8",
     "dotenv": "~8.2.0",
     "jest": "~24.9.0",
-    "npm-check-updates": "~3.2.1",
+    "npm-check-updates": "~3.2.2",
     "prettier": "~1.19.1",
     "supertest": "~4.0.2",
     "swagger-ui-express": "~4.1.2",
