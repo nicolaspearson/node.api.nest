@@ -31,7 +31,7 @@
     "@nestjs/typeorm": "~7.0.0",
     "bcrypt": "~4.0.1",
     "class-transformer": "~0.2.3",
-    "class-validator": "~0.11.0",
+    "class-validator": "~0.11.1",
     "module-alias": "~2.2.2",
     "nconf": "~0.10.0",
     "passport": "~0.4.1",
