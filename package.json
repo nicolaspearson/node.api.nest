@@ -44,7 +44,7 @@
     "typeorm": "~0.2.24"
   },
   "devDependencies": {
-    "@nestjs/swagger": "~4.4.0",
+    "@nestjs/swagger": "~4.5.2",
     "@nestjs/testing": "~7.0.1",
     "@types/bcrypt": "~3.0.0",
     "@types/express": "~4.17.2",
